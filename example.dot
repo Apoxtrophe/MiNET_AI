@@ -1,0 +1,68 @@
+digraph Minet {
+    // Use left-to-right orientation
+    rankdir=LR;
+    graph [layout=dot, fontname="Helvetica", fontsize=12];
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=10];
+
+    subgraph cluster_inputs {
+        style=filled;
+        color="#cceeff";
+        penwidth=1.5;
+        label="Input Layer";
+        labelloc="top";
+        labeljust="center";
+        rank=same;
+        neuron_0 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:0\nBias=0.00"];
+        neuron_1 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:1\nBias=0.00"];
+    }
+
+    subgraph cluster_hidden {
+        style=filled;
+        color="#e6e6e6";
+        penwidth=1.5;
+        label="Hidden Layer";
+        labelloc="top";
+        labeljust="center";
+        neuron_2 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:2\nBias=0.00"];
+        neuron_3 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:3\nBias=0.00"];
+        neuron_4 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:4\nBias=0.00"];
+        neuron_5 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:5\nBias=0.00"];
+    }
+
+    subgraph cluster_outputs {
+        style=filled;
+        color="#ccffcc";
+        penwidth=1.5;
+        label="Output Layer";
+        labelloc="top";
+        labeljust="center";
+        rank=same;
+        neuron_6 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:6\nBias=0.00"];
+        neuron_7 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:7\nBias=0.00"];
+        neuron_8 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:8\nBias=0.00"];
+    }
+
+    // Edges
+    edge [color="#555555", penwidth=1.2];
+    neuron_0 -> neuron_2 [label="0.00", fontcolor="#333333"];
+    neuron_0 -> neuron_4 [label="0.00", fontcolor="#333333"];
+    neuron_1 -> neuron_3 [label="0.00", fontcolor="#333333"];
+    neuron_1 -> neuron_7 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_7 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_4 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_3 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_8 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_6 [label="0.00", fontcolor="#333333"];
+    neuron_2 -> neuron_5 [label="0.00", fontcolor="#333333"];
+    neuron_3 -> neuron_7 [label="0.00", fontcolor="#333333"];
+    neuron_3 -> neuron_6 [label="0.00", fontcolor="#333333"];
+    neuron_3 -> neuron_8 [label="0.00", fontcolor="#333333"];
+    neuron_4 -> neuron_6 [label="0.00", fontcolor="#333333"];
+    neuron_4 -> neuron_7 [label="0.00", fontcolor="#333333"];
+    neuron_4 -> neuron_5 [label="0.00", fontcolor="#333333"];
+    neuron_4 -> neuron_8 [label="0.00", fontcolor="#333333"];
+    neuron_5 -> neuron_6 [label="0.00", fontcolor="#333333"];
+    neuron_5 -> neuron_7 [label="0.00", fontcolor="#333333"];
+    neuron_5 -> neuron_8 [label="0.00", fontcolor="#333333"];
+}
