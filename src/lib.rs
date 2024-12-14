@@ -20,8 +20,8 @@ pub struct Minet {
     output: usize, 
 }
 
-const WEIGHT_DELTA: f32 = 0.005;
-const BIAS_DELTA: f32 = 0.001;
+const WEIGHT_DELTA: f32 = 0.05;
+const BIAS_DELTA: f32 = 0.01;
 const SYNAPSE_PROBABILITY: f64 = 0.1;
 
 impl Minet {

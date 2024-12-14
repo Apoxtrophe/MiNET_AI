@@ -5,16 +5,16 @@ use rand::{seq::SliceRandom, thread_rng, Rng};
 // 1.0 Confirm 
 // 0.0 Deny
 
-const GENERATIONS: usize = 500;
+const GENERATIONS: usize = 1000;
 const NUM_PLAYERS: usize = 100;
-const OPPONENTS_PER_PLAYER: usize = 75;
+const OPPONENTS_PER_PLAYER: usize = 5;
 
 fn main() {
     let mut players: Vec<Player> = (0..NUM_PLAYERS)
         .map(|_| Player {
             strategy: 0.0,
             history: Vec::new(),
-            brain: Minet::new(5,10,1), // Adjust parameters as needed for your network
+            brain: Minet::new(5,12,1), // Adjust parameters as needed for your network
             fitness: 0,
         })
         .collect();
