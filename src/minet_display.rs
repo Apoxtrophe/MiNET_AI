@@ -9,6 +9,7 @@ impl Minet {
         let outputs = self.output as usize;
         let length = self.genes.len();
         let hidden_space = length - outputs;
+        let synapses_count = self.synapse_count();
         for (i, gene) in self.genes.iter().enumerate() {
             let mut neuron_type: &str = "";
             if i < inputs { 
@@ -24,7 +25,9 @@ impl Minet {
                 "{} | {} :: Bias: {}, Synapses: {:.2?}",
                 i , neuron_type, gene.0, gene.1
             );
+
         }
+        println!("Synapses: {}", synapses_count);
     }
     
     pub fn to_dot(&self) -> String {
@@ -112,7 +115,7 @@ impl Minet {
         dot
     }
     
-    pub fn write_dot_to_file(
+    pub fn dot_to_file(
         &self, 
         filename: &str
     ) -> std::io::Result<()> {

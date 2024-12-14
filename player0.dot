@@ -1,0 +1,82 @@
+digraph Minet {
+    // Use left-to-right orientation
+    rankdir=LR;
+    graph [layout=dot, fontname="Helvetica", fontsize=12];
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=10];
+
+    subgraph cluster_inputs {
+        style=filled;
+        color="#cceeff";
+        penwidth=1.5;
+        label="Input Layer";
+        labelloc="top";
+        labeljust="center";
+        rank=same;
+        neuron_0 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:0\nBias=-0.96"];
+        neuron_1 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:1\nBias=0.64"];
+        neuron_2 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:2\nBias=0.41"];
+        neuron_3 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:3\nBias=0.34"];
+        neuron_4 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:4\nBias=-0.45"];
+    }
+
+    subgraph cluster_hidden {
+        style=filled;
+        color="#e6e6e6";
+        penwidth=1.5;
+        label="Hidden Layer";
+        labelloc="top";
+        labeljust="center";
+        neuron_5 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:5\nBias=-0.20"];
+        neuron_6 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:6\nBias=0.00"];
+        neuron_7 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:7\nBias=-1.00"];
+        neuron_8 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:8\nBias=1.47"];
+        neuron_9 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:9\nBias=-0.34"];
+    }
+
+    subgraph cluster_outputs {
+        style=filled;
+        color="#ccffcc";
+        penwidth=1.5;
+        label="Output Layer";
+        labelloc="top";
+        labeljust="center";
+        rank=same;
+        neuron_10 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:10\nBias=0.53"];
+    }
+
+    // Edges
+    edge [color="#555555", penwidth=1.2];
+    neuron_0 -> neuron_9 [label="-0.66", fontcolor="#333333"];
+    neuron_0 -> neuron_6 [label="1.11", fontcolor="#333333"];
+    neuron_0 -> neuron_8 [label="-0.10", fontcolor="#333333"];
+    neuron_0 -> neuron_10 [label="-0.55", fontcolor="#333333"];
+    neuron_0 -> neuron_5 [label="0.04", fontcolor="#333333"];
+    neuron_1 -> neuron_10 [label="0.61", fontcolor="#333333"];
+    neuron_1 -> neuron_6 [label="-0.16", fontcolor="#333333"];
+    neuron_1 -> neuron_5 [label="0.30", fontcolor="#333333"];
+    neuron_1 -> neuron_8 [label="-0.42", fontcolor="#333333"];
+    neuron_2 -> neuron_8 [label="-0.92", fontcolor="#333333"];
+    neuron_2 -> neuron_6 [label="-0.51", fontcolor="#333333"];
+    neuron_2 -> neuron_10 [label="0.06", fontcolor="#333333"];
+    neuron_2 -> neuron_5 [label="0.53", fontcolor="#333333"];
+    neuron_2 -> neuron_7 [label="0.66", fontcolor="#333333"];
+    neuron_3 -> neuron_10 [label="0.92", fontcolor="#333333"];
+    neuron_3 -> neuron_7 [label="-0.87", fontcolor="#333333"];
+    neuron_3 -> neuron_6 [label="0.03", fontcolor="#333333"];
+    neuron_3 -> neuron_5 [label="0.07", fontcolor="#333333"];
+    neuron_3 -> neuron_9 [label="0.86", fontcolor="#333333"];
+    neuron_4 -> neuron_9 [label="-0.64", fontcolor="#333333"];
+    neuron_4 -> neuron_10 [label="-0.74", fontcolor="#333333"];
+    neuron_4 -> neuron_8 [label="-0.52", fontcolor="#333333"];
+    neuron_6 -> neuron_8 [label="0.71", fontcolor="#333333"];
+    neuron_6 -> neuron_10 [label="-0.05", fontcolor="#333333"];
+    neuron_6 -> neuron_7 [label="-0.02", fontcolor="#333333"];
+    neuron_6 -> neuron_9 [label="0.95", fontcolor="#333333"];
+    neuron_7 -> neuron_9 [label="-0.05", fontcolor="#333333"];
+    neuron_7 -> neuron_8 [label="-0.41", fontcolor="#333333"];
+    neuron_7 -> neuron_10 [label="-0.09", fontcolor="#333333"];
+    neuron_8 -> neuron_10 [label="-0.89", fontcolor="#333333"];
+    neuron_8 -> neuron_9 [label="0.44", fontcolor="#333333"];
+    neuron_9 -> neuron_10 [label="0.00", fontcolor="#333333"];
+}
