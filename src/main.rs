@@ -1,4 +1,4 @@
-use minet_ai::*;
+ghiuse minet_ai::*;
 use std::io::{self, BufRead};
 use rand::{seq::SliceRandom, thread_rng, Rng};
 
@@ -14,7 +14,8 @@ fn main() {
         .map(|_| Player {
             strategy: 0.0,
             history: Vec::new(),
-            brain: Minet::new(5,12,1), // Adjust parameters as needed for your network
+            brain: Minet::new(5,36
+                ,1), // Adjust parameters as needed for your network
             fitness: 0,
         })
         .collect();
