@@ -1,4 +1,6 @@
 mod minet_display;
+use std::usize;
+
 pub use minet_display::*;
 
 mod minet_encoding;
@@ -15,9 +17,9 @@ use rand::{seq::SliceRandom, Rng};
 #[derive(Clone)]
 pub struct Minet {
     pub genes: Vec<(f32, Vec<(usize, f32)>)>,
-    input: usize,
-    hidden: usize,
-    output: usize,
+    pub input: usize,
+    pub hidden: usize,
+    pub output: usize,
 }
 
 const WEIGHT_DELTA: f32 = 0.05;
@@ -35,11 +37,17 @@ impl Minet {
             hidden,
             output,
         };
-        let total_synapses = minet.synapses_max();
+        
+        let non_output = input + hidden;
 
-        while minet.synapse_count() < total_synapses {
-            minet.synapse_connect_random();
+        for i in non_output..total_neurons {
+            println!("Output Neuron: {}", i);
+            let mut source = minet.connect_random_from(i);
+            while source > (input - 1) { 
+                source = minet.connect_random_from(source);
+            }
         }
+        
         minet
     }
 
@@ -165,6 +173,27 @@ impl Minet {
                 break;
             }
         }
+    }
+    
+    pub fn connect_random_from(&mut self, to_index: usize) -> usize {
+        let mut rng = rand::thread_rng();
+        
+        let non_output = self.input + self.hidden;
+        
+        let from_index = rng.gen_range(0..(to_index.clamp(0, non_output)));
+        
+        let synapse_candidates = self.synapse_candidates(from_index);
+        
+        println!("{:?}", synapse_candidates);
+        
+        for i in 0..synapse_candidates.len() {
+            let target = synapse_candidates[i];
+            if target == to_index {
+                let weight = random_weight();
+                self.genes[from_index].1.push((to_index, weight));
+            }
+        }
+        from_index
     }
 
     pub fn synapses_max(&self) -> usize {
