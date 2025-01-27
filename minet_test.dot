@@ -14,6 +14,7 @@ digraph Minet {
         labeljust="center";
         rank=same;
         neuron_0 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:0\nBias=0.00"];
+        neuron_1 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:1\nBias=0.00"];
     }
 
     subgraph cluster_hidden {
@@ -23,10 +24,10 @@ digraph Minet {
         label="Hidden Layer";
         labelloc="top";
         labeljust="center";
-        neuron_1 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:1\nBias=0.00"];
         neuron_2 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:2\nBias=0.00"];
         neuron_3 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:3\nBias=0.00"];
         neuron_4 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:4\nBias=0.00"];
+        neuron_5 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:5\nBias=0.00"];
     }
 
     subgraph cluster_outputs {
@@ -37,14 +38,15 @@ digraph Minet {
         labelloc="top";
         labeljust="center";
         rank=same;
-        neuron_5 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:5\nBias=0.00"];
+        neuron_6 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:6\nBias=0.00"];
+        neuron_7 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:7\nBias=0.00"];
     }
 
     // Edges
     edge [color="#555555", penwidth=1.2];
-    neuron_0 -> neuron_1 [label="0.45", fontcolor="#333333"];
-    neuron_1 -> neuron_2 [label="-0.51", fontcolor="#333333"];
-    neuron_2 -> neuron_3 [label="-0.73", fontcolor="#333333"];
-    neuron_3 -> neuron_4 [label="-0.14", fontcolor="#333333"];
-    neuron_4 -> neuron_5 [label="-0.42", fontcolor="#333333"];
+    neuron_0 -> neuron_3 [label="-1.08", fontcolor="#333333"];
+    neuron_1 -> neuron_2 [label="-0.38", fontcolor="#333333"];
+    neuron_2 -> neuron_6 [label="-0.05", fontcolor="#333333"];
+    neuron_3 -> neuron_5 [label="0.23", fontcolor="#333333"];
+    neuron_5 -> neuron_7 [label="0.16", fontcolor="#333333"];
 }

@@ -12,7 +12,8 @@ use minet_activation::*;
 mod minet_random;
 pub use minet_random::*;
 
-use rand::{seq::SliceRandom, Rng};
+use rand::{seq::SliceRandom, thread_rng, Rng};
+use rand_distr::{Distribution, Normal};
 
 #[derive(Clone)]
 pub struct Minet {
@@ -22,9 +23,11 @@ pub struct Minet {
     pub output: usize,
 }
 
-const WEIGHT_DELTA: f32 = 0.05;
-const BIAS_DELTA: f32 = 0.01;
+const INITIAL_WEIGHT_STD_DEVIATION: f32 = 0.5;
+const WEIGHT_STD_DEVIATION: f32 = 0.05;
+const BIAS_STD_DEVIATION: f32 = 0.01;
 const SYNAPSE_PROBABILITY: f64 = 0.1;
+
 
 impl Minet {
     pub fn new(input: usize, hidden: usize, output: usize) -> Self {
@@ -90,7 +93,7 @@ impl Minet {
         let mut rng = rand::thread_rng();
         for gene in self.genes.iter_mut() {
             for synapse in gene.1.iter_mut() {
-                synapse.1 += rng.gen_range(-WEIGHT_DELTA..WEIGHT_DELTA);
+                synapse.1 += sample_normal(WEIGHT_STD_DEVIATION);
             }
         }
     }
@@ -98,7 +101,7 @@ impl Minet {
     pub fn mutate_bias(&mut self) {
         let mut rng = rand::thread_rng();
         for gene in self.genes.iter_mut() {
-            gene.0 += rng.gen_range(-BIAS_DELTA..BIAS_DELTA);
+            gene.0 += sample_normal(BIAS_STD_DEVIATION);
         }
     }
 
@@ -143,7 +146,8 @@ impl Minet {
         }
         outputs
     }
-
+    
+    /// Removes a random synapse from the genome, if any synapses exist
     pub fn synapse_remove_random(&mut self) {
         let mut rng = rand::thread_rng();
         let connected_neurons: Vec<(usize, usize)> = self
@@ -159,7 +163,8 @@ impl Minet {
             println!("No synapses to remove.");
         }
     }
-
+    
+    /// Connects two random, unconnected neurons in the forward direction. 
     pub fn synapse_connect_random(&mut self) {
         let mut rng = rand::thread_rng();
         let non_output = self.input + self.hidden;
@@ -168,13 +173,15 @@ impl Minet {
             let source = rng.gen_range(0..non_output);
             let target_candidates = self.synapse_candidates(source);
             if let Some(&target) = target_candidates.choose(&mut rng) {
-                let weight = random_weight();
+                let weight = sample_normal(INITIAL_WEIGHT_STD_DEVIATION);
                 self.genes[source].1.push((target, weight));
                 break;
             }
         }
     }
     
+    /// Connects a random neuron from an index lower than the to_index. 
+    /// ie from an output neuron to a hidden or input neuron in the forward direction
     pub fn connect_random_from(&mut self, to_index: usize) -> usize {
         let mut rng = rand::thread_rng();
         
@@ -189,18 +196,18 @@ impl Minet {
         for i in 0..synapse_candidates.len() {
             let target = synapse_candidates[i];
             if target == to_index {
-                let weight = random_weight();
+                let weight = sample_normal(INITIAL_WEIGHT_STD_DEVIATION);
                 self.genes[from_index].1.push((to_index, weight));
             }
         }
         from_index
     }
-
-    pub fn synapses_max(&self) -> usize {
-        let max_synapses = (self.input + self.output) * self.hidden;
-        max_synapses
-    }
-
+    
+    /// Generates candidates for synapse connections with the given criteria
+    /// 1. If source is a output neuron, it returns an empty vec
+    /// 2. Target index candidates must be larger than source index
+    /// 3. Candidates must not already be connected
+    /// 4. If the source is a input neuron, all candidates must be hidden or output neurons
     fn synapse_candidates(&self, source: usize) -> Vec<usize> {
         if source >= self.genes.len() - self.output {
             return Vec::new();
@@ -214,12 +221,20 @@ impl Minet {
             .map(|(i, _)| i)
             .collect()
     }
-
+    
+    /// Returns true if the two selected neurons are connected by synapse
     fn synapse_is_connected(&self, source: usize, target: usize) -> bool {
         self.genes[source].1.iter().any(|&(t, _)| t == target)
     }
 
+    /// Returns count of synapses in the genome
     pub fn synapse_count(&self) -> usize {
         self.genes.iter().map(|gene| gene.1.len()).sum()
     }
+}
+
+fn sample_normal(std_dev: f32) -> f32 {
+    let normal = Normal::new(0.0, std_dev).expect("Invalid parameters for Normal distribution");
+    let mut rng = thread_rng();
+    normal.sample(&mut rng)
 }
