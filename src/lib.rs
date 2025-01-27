@@ -21,6 +21,7 @@ pub struct Minet {
     pub input: usize,
     pub hidden: usize,
     pub output: usize,
+    pub fitness: f32,
 }
 
 const INITIAL_WEIGHT_STD_DEVIATION: f32 = 0.5;
@@ -39,12 +40,12 @@ impl Minet {
             input,
             hidden,
             output,
+            fitness: 0.0,
         };
         
         let non_output = input + hidden;
 
         for i in non_output..total_neurons {
-            println!("Output Neuron: {}", i);
             let mut source = minet.connect_random_from(i);
             while source > (input - 1) { 
                 source = minet.connect_random_from(source);
@@ -85,6 +86,7 @@ impl Minet {
             input: self.input,
             hidden: self.hidden,
             output: self.output,
+            fitness: 0.0,
         };
         child
     }
@@ -191,8 +193,6 @@ impl Minet {
         
         let synapse_candidates = self.synapse_candidates(from_index);
         
-        println!("{:?}", synapse_candidates);
-        
         for i in 0..synapse_candidates.len() {
             let target = synapse_candidates[i];
             if target == to_index {
@@ -237,4 +237,33 @@ fn sample_normal(std_dev: f32) -> f32 {
     let normal = Normal::new(0.0, std_dev).expect("Invalid parameters for Normal distribution");
     let mut rng = thread_rng();
     normal.sample(&mut rng)
+}
+
+/// Takes the best % of the population 
+/// Randomly crossbreeds them (asexual reproduction is possible)
+/// Returns a new population of the children of the survivors, with mutations
+pub fn crossbreed_population(
+    mut population: Vec<Minet>,
+    survival_rate: f32,
+    target_population: usize, 
+) -> Vec<Minet> {
+    let population_size = population.len();
+    let surviving_count = (population_size as f32 * survival_rate).round() as usize;
+    
+    // Take the best (survival_rate * population) of the population by fitness
+    population.sort_by(|a, b| b.fitness.partial_cmp(&a.fitness).unwrap());
+    population.truncate(surviving_count);
+    
+    let mut new_population = Vec::with_capacity(target_population);
+    
+    for i in 0..target_population {
+        let parent1 = population.choose(&mut thread_rng()).unwrap();
+        let parent2 = population.choose(&mut thread_rng()).unwrap();
+        let mut child = parent1.crossbreed(parent2);
+        println!("parent1: {}, parent2: {}", parent1.fitness, parent2.fitness);
+        child.mutate();
+        new_population.push(child);
+    }
+    
+    new_population
 }

@@ -28,6 +28,7 @@ impl Minet {
 
         }
         println!("Synapses: {}", synapses_count);
+        println!("Fitness: {}", self.fitness);
     }
     
     pub fn to_dot(&self) -> String {
