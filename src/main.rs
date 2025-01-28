@@ -2,7 +2,7 @@ use minet_ai::*;
 use rand::Rng;
 
 const POPULATION: usize = 100;
-const SURVIVAL_RATE: f32 = 0.2;
+const SURVIVAL_RATE: f32 = 0.1;
 const GENERATIONS: usize = 1000;
 const ITERATIONS: usize = 100; 
 const PERFECT_FITNESS_THRESHOLD: f32 = 0.99999;
@@ -36,7 +36,7 @@ fn main() {
     
     let mut generation_sum = 0;
     for iteration in 0..ITERATIONS {
-        let mut population = initialize_population(POPULATION, 3, 8, 2);
+        let mut population = initialize_population(POPULATION, 3, 12, 2);
         print_header();
 
         for generation in 1..=GENERATIONS {
