@@ -249,21 +249,23 @@ pub fn crossbreed_population(
 ) -> Vec<Minet> {
     let population_size = population.len();
     let surviving_count = (population_size as f32 * survival_rate).round() as usize;
+
+    let new_target = target_population - surviving_count;
     
     // Take the best (survival_rate * population) of the population by fitness
     population.sort_by(|a, b| b.fitness.partial_cmp(&a.fitness).unwrap());
     population.truncate(surviving_count);
     
-    let mut new_population = Vec::with_capacity(target_population);
+    for i in 0..population.len() {
+        population[i].fitness = 0.0;
+    }
     
-    for i in 0..target_population {
+    for i in 0..new_target{
         let parent1 = population.choose(&mut thread_rng()).unwrap();
         let parent2 = population.choose(&mut thread_rng()).unwrap();
         let mut child = parent1.crossbreed(parent2);
-        println!("parent1: {}, parent2: {}", parent1.fitness, parent2.fitness);
         child.mutate();
-        new_population.push(child);
+        population.push(child);
     }
-    
-    new_population
+    population
 }
