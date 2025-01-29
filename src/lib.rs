@@ -125,7 +125,7 @@ impl Minet {
             // Add bias
             activation_map[i] += self.genes[i].0;
             // Apply ReLU (assume relu(x) = max(0,x))
-            activation_map[i] = relu(activation_map[i]);
+            activation_map[i] = tanh(activation_map[i]);
 
             // Propagate hidden activations forward
             for &(target_idx, weight) in &self.genes[i].1 {

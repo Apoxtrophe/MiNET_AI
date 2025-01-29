@@ -36,7 +36,7 @@ fn main() {
     
     let mut generation_sum = 0;
     for iteration in 0..ITERATIONS {
-        let mut population = initialize_population(POPULATION, 3, 12, 2);
+        let mut population = initialize_population(POPULATION, 3, 5, 2);
         print_header();
 
         for generation in 1..=GENERATIONS {
