@@ -25,7 +25,7 @@ pub struct Minet {
 }
 
 const INITIAL_WEIGHT_STD_DEVIATION: f32 = 0.5;
-const WEIGHT_STD_DEVIATION: f32 = 0.03;
+const WEIGHT_STD_DEVIATION: f32 = 0.05;
 const BIAS_STD_DEVIATION: f32 = 0.01;
 const SYNAPSE_PROBABILITY: f64 = 0.3;
 
