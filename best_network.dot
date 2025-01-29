@@ -13,9 +13,9 @@ digraph Minet {
         labelloc="top";
         labeljust="center";
         rank=same;
-        neuron_0 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:0\nBias=-0.20"];
-        neuron_1 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:1\nBias=0.10"];
-        neuron_2 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:2\nBias=-0.23"];
+        neuron_0 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:0\nBias=0.05"];
+        neuron_1 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:1\nBias=0.00"];
+        neuron_2 [shape=box, style=filled, fillcolor=white, penwidth=1.5, label="In:2\nBias=0.02"];
     }
 
     subgraph cluster_hidden {
@@ -25,11 +25,11 @@ digraph Minet {
         label="Hidden Layer";
         labelloc="top";
         labeljust="center";
-        neuron_3 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:3\nBias=-0.23"];
-        neuron_4 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:4\nBias=-0.05"];
-        neuron_5 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:5\nBias=0.45"];
-        neuron_6 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:6\nBias=-0.29"];
-        neuron_7 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:7\nBias=-0.27"];
+        neuron_3 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:3\nBias=-0.44"];
+        neuron_4 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:4\nBias=-0.35"];
+        neuron_5 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:5\nBias=-0.22"];
+        neuron_6 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:6\nBias=0.08"];
+        neuron_7 [shape=ellipse, style=filled, fillcolor=white, penwidth=1.5, label="H:7\nBias=0.42"];
     }
 
     subgraph cluster_outputs {
@@ -40,34 +40,41 @@ digraph Minet {
         labelloc="top";
         labeljust="center";
         rank=same;
-        neuron_8 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:8\nBias=0.26"];
-        neuron_9 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:9\nBias=0.05"];
+        neuron_8 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:8\nBias=0.24"];
+        neuron_9 [shape=doublecircle, style=filled, fillcolor=white, penwidth=1.5, label="Out:9\nBias=0.26"];
     }
 
     // Edges
     edge [color="#555555", penwidth=1.2];
-    neuron_0 -> neuron_5 [label="-2.17", fontcolor="#333333"];
-    neuron_1 -> neuron_6 [label="2.91", fontcolor="#333333"];
-    neuron_1 -> neuron_4 [label="1.26", fontcolor="#333333"];
-    neuron_1 -> neuron_7 [label="2.22", fontcolor="#333333"];
-    neuron_1 -> neuron_8 [label="-1.51", fontcolor="#333333"];
-    neuron_1 -> neuron_3 [label="0.00", fontcolor="#333333"];
-    neuron_2 -> neuron_6 [label="-2.28", fontcolor="#333333"];
-    neuron_2 -> neuron_5 [label="1.21", fontcolor="#333333"];
-    neuron_2 -> neuron_8 [label="2.77", fontcolor="#333333"];
-    neuron_2 -> neuron_7 [label="-1.37", fontcolor="#333333"];
-    neuron_2 -> neuron_9 [label="-1.69", fontcolor="#333333"];
-    neuron_2 -> neuron_4 [label="-0.34", fontcolor="#333333"];
-    neuron_3 -> neuron_6 [label="0.41", fontcolor="#333333"];
-    neuron_3 -> neuron_7 [label="0.02", fontcolor="#333333"];
-    neuron_4 -> neuron_8 [label="-1.93", fontcolor="#333333"];
-    neuron_4 -> neuron_6 [label="0.32", fontcolor="#333333"];
-    neuron_4 -> neuron_9 [label="-0.08", fontcolor="#333333"];
-    neuron_5 -> neuron_7 [label="-1.91", fontcolor="#333333"];
-    neuron_5 -> neuron_6 [label="-3.12", fontcolor="#333333"];
-    neuron_5 -> neuron_8 [label="2.70", fontcolor="#333333"];
-    neuron_5 -> neuron_9 [label="-0.48", fontcolor="#333333"];
-    neuron_6 -> neuron_8 [label="4.01", fontcolor="#333333"];
-    neuron_6 -> neuron_7 [label="-2.50", fontcolor="#333333"];
-    neuron_7 -> neuron_8 [label="-5.15", fontcolor="#333333"];
+    neuron_0 -> neuron_3 [label="2.43", fontcolor="#333333"];
+    neuron_0 -> neuron_7 [label="-0.76", fontcolor="#333333"];
+    neuron_0 -> neuron_5 [label="0.73", fontcolor="#333333"];
+    neuron_1 -> neuron_3 [label="-1.20", fontcolor="#333333"];
+    neuron_1 -> neuron_8 [label="5.09", fontcolor="#333333"];
+    neuron_1 -> neuron_7 [label="-1.57", fontcolor="#333333"];
+    neuron_1 -> neuron_4 [label="-1.48", fontcolor="#333333"];
+    neuron_1 -> neuron_5 [label="-0.44", fontcolor="#333333"];
+    neuron_1 -> neuron_6 [label="0.22", fontcolor="#333333"];
+    neuron_1 -> neuron_9 [label="-1.16", fontcolor="#333333"];
+    neuron_2 -> neuron_4 [label="1.99", fontcolor="#333333"];
+    neuron_2 -> neuron_7 [label="2.62", fontcolor="#333333"];
+    neuron_2 -> neuron_8 [label="-6.15", fontcolor="#333333"];
+    neuron_2 -> neuron_9 [label="-0.57", fontcolor="#333333"];
+    neuron_2 -> neuron_3 [label="-0.65", fontcolor="#333333"];
+    neuron_2 -> neuron_6 [label="0.42", fontcolor="#333333"];
+    neuron_3 -> neuron_7 [label="3.93", fontcolor="#333333"];
+    neuron_3 -> neuron_8 [label="-7.34", fontcolor="#333333"];
+    neuron_3 -> neuron_5 [label="1.61", fontcolor="#333333"];
+    neuron_3 -> neuron_6 [label="-0.61", fontcolor="#333333"];
+    neuron_3 -> neuron_9 [label="1.09", fontcolor="#333333"];
+    neuron_3 -> neuron_4 [label="0.10", fontcolor="#333333"];
+    neuron_4 -> neuron_5 [label="3.15", fontcolor="#333333"];
+    neuron_4 -> neuron_8 [label="-5.38", fontcolor="#333333"];
+    neuron_5 -> neuron_7 [label="4.12", fontcolor="#333333"];
+    neuron_5 -> neuron_8 [label="1.99", fontcolor="#333333"];
+    neuron_6 -> neuron_7 [label="-1.46", fontcolor="#333333"];
+    neuron_6 -> neuron_9 [label="-1.11", fontcolor="#333333"];
+    neuron_6 -> neuron_8 [label="-0.53", fontcolor="#333333"];
+    neuron_7 -> neuron_8 [label="9.33", fontcolor="#333333"];
+    neuron_7 -> neuron_9 [label="-2.09", fontcolor="#333333"];
 }

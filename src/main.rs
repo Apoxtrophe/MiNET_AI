@@ -31,7 +31,22 @@ const TABLE_EXPECTED: &[&[f32]] = &[
     &[1.0, 1.0],
 ];
 
-fn main() {
+fn main () {
+    benchmark();
+    
+
+   /* 
+   
+   let minet = Minet::new(3, 5, 2);
+   minet.display();
+   minet.dot_to_file("minet_test.dot");
+   */
+
+    
+
+}
+
+fn benchmark() {
 
     
     let mut generation_sum = 0;

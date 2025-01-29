@@ -25,10 +25,9 @@ pub struct Minet {
 }
 
 const INITIAL_WEIGHT_STD_DEVIATION: f32 = 0.5;
-const WEIGHT_STD_DEVIATION: f32 = 0.05;
-const BIAS_STD_DEVIATION: f32 = 0.01;
-const SYNAPSE_PROBABILITY: f64 = 0.3;
-
+const WEIGHT_STD_DEVIATION: f32 = 0.1;
+const BIAS_STD_DEVIATION: f32 = 0.016;
+const SYNAPSE_PROBABILITY: f64 = 0.4;
 
 impl Minet {
     pub fn new(input: usize, hidden: usize, output: usize) -> Self {
@@ -45,8 +44,10 @@ impl Minet {
         
         let non_output = input + hidden;
         
-        for i in 0..non_output {
-            minet.synapse_connect_random();
+        for i in input..total_neurons {
+            minet.connect_random_from(i);
+            minet.connect_random_from(i);
+            minet.connect_random_from(i);
         }
         
         minet
