@@ -1,7 +1,6 @@
 // BENCHMARKING EXAMPLE
 
 use minet_ai::*;
-use rand::Rng;
 
 const POPULATION: usize = 100;
 const SURVIVAL_RATE: f32 = 0.1;
@@ -68,7 +67,7 @@ fn benchmark() {
                     );
                     print_generation(generation, best, TABLE_EXPECTED, TABLE_INPUTS);
                     if iteration == ITERATIONS - 1 {
-                        best.dot_to_file("best_network.dot");
+                        best.dot_to_file("best_network.dot").expect("Failed to write DOT file.");
                     }
 
 

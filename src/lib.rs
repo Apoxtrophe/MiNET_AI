@@ -1,9 +1,8 @@
 // MiNET AI - Miniaturized Neural Evolutionary Topology
 // Version 0.1.0
-
-mod minet_display;
 use std::usize;
 
+mod minet_display;
 pub use minet_display::*;
 
 mod minet_encoding;
@@ -12,8 +11,6 @@ pub use minet_encoding::*;
 mod minet_activation;
 use minet_activation::*;
 
-mod minet_random;
-pub use minet_random::*;
 
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use rand_distr::{Distribution, Normal};
@@ -44,8 +41,7 @@ impl Minet {
             output,
             fitness: 0.0,
         };
-        
-        let non_output = input + hidden;
+    
         
         for i in input..total_neurons {
             minet.connect_random_from(i);
@@ -93,7 +89,6 @@ impl Minet {
     }
 
     pub fn mutate_weights(&mut self) {
-        let mut rng = rand::thread_rng();
         for gene in self.genes.iter_mut() {
             for synapse in gene.1.iter_mut() {
                 synapse.1 += sample_normal(WEIGHT_STD_DEVIATION);
@@ -102,7 +97,6 @@ impl Minet {
     }
 
     pub fn mutate_bias(&mut self) {
-        let mut rng = rand::thread_rng();
         for gene in self.genes.iter_mut() {
             gene.0 += sample_normal(BIAS_STD_DEVIATION);
         }
@@ -261,7 +255,7 @@ pub fn crossbreed_population(
         population[i].fitness = 0.0;
     }
     
-    for i in 0..new_target{
+    for _ in 0..new_target{
         let parent1 = population.choose(&mut thread_rng()).unwrap();
         let parent2 = population.choose(&mut thread_rng()).unwrap();
         let mut child = parent1.crossbreed(parent2);

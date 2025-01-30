@@ -1,7 +1,14 @@
 [package]
-name = "minet-ai"
+name = "minet_ai"
 version = "0.1.0"
+authors = ["Astoria"] 
 edition = "2021"
+rust-version = "1.84.1"
+description = "MiNET AI (Miniaturized Neural Evolutionary Topology) is a minimalistic Rust library that evolves small neural networks via genetic algorithm. With a focus on producing compact, adaptive networks that evolve to solve any problem they are given."
+repository = "https://github.com/Apoxtrophe/MiNET_AI"
+license = "MIT OR Apache-2.0"
+keywords = ["neural-network", "genetic-algorithm", "ai", "neuroevolution", "minet"]
+categories = ["algoithms", "data-structures", "encoding", "game-development", "science::neuroscience"]
 
 [dependencies]
 rand = "0.8.5"

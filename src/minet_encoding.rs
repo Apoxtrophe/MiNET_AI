@@ -1,6 +1,6 @@
 use crate::Minet;
 use base64::{engine::general_purpose, Engine as _};
-use std::{error::Error, io::{Cursor, Read, Write}};
+use std::io::{Cursor, Read};
 
 
 impl Minet {
