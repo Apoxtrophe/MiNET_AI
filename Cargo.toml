@@ -8,7 +8,7 @@ description = "MiNET AI (Miniaturized Neural Evolutionary Topology) is a minimal
 repository = "https://github.com/Apoxtrophe/MiNET_AI"
 license = "MIT OR Apache-2.0"
 keywords = ["neural-network", "genetic-algorithm", "ai", "neuroevolution", "minet"]
-categories = ["algoithms", "data-structures", "encoding", "game-development", "science::neuroscience"]
+categories = ["algorithms", "data-structures", "encoding", "game-development", "science::neuroscience"]
 
 [dependencies]
 rand = "0.8.5"
