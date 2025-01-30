@@ -1,3 +1,5 @@
+// BENCHMARKING EXAMPLE
+
 use minet_ai::*;
 use rand::Rng;
 

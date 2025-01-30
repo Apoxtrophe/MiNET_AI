@@ -1,3 +1,6 @@
+// MiNET AI - Miniaturized Neural Evolutionary Topology
+// Version 0.1.0
+
 mod minet_display;
 use std::usize;
 
