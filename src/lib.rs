@@ -67,7 +67,7 @@ impl minet {
     }
 
     fn synapse_swap(&mut self) {
-        self.synapse_remove_random();
+        self.synapse_remove_smallest();
         self.synapse_connect_random();
     }
 
@@ -163,6 +163,30 @@ impl minet {
             self.genes[neuron].1.remove(synapse);
         } else {
             println!("No synapses to remove.");
+        }
+    }
+    
+    pub fn synapse_remove_smallest(
+        &mut self,
+    ) {
+        let mut min_abs_weight = f32::MAX;
+        let mut min_synapse_location: (usize, usize) = (usize::MAX, usize::MAX);
+        
+        // Find the (gene_idx, synapse_idx) of the smallest |weight|
+        for (gene_idx, gene) in self.genes.iter().enumerate() {
+            for (synapse_idx, &(_, weight)) in gene.1.iter().enumerate() {
+                let abs_weight = weight.abs();
+                if abs_weight < min_abs_weight {
+                    min_abs_weight = abs_weight;
+                    min_synapse_location = (gene_idx, synapse_idx);
+                }
+            }
+        }
+            
+        // If we found a valid synapse, remove it
+        if min_synapse_location.0 != usize::MAX {
+            let (g_idx, s_idx) = min_synapse_location;
+            self.genes[g_idx].1.remove(s_idx);
         }
     }
     
@@ -268,5 +292,3 @@ fn sample_normal(std_dev: f32) -> f32 {
     let mut rng = thread_rng();
     normal.sample(&mut rng)
 }
-
-
