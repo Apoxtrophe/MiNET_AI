@@ -11,12 +11,11 @@ pub use minet_encoding::*;
 mod minet_activation;
 use minet_activation::*;
 
-
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use rand_distr::{Distribution, Normal};
 
 #[derive(Clone)]
-pub struct Minet {
+pub struct minet {
     pub genes: Vec<(f32, Vec<(usize, f32)>)>,
     pub input: usize,
     pub hidden: usize,
@@ -29,12 +28,12 @@ const WEIGHT_STD_DEVIATION: f32 = 0.1;
 const BIAS_STD_DEVIATION: f32 = 0.016;
 const SYNAPSE_PROBABILITY: f64 = 0.4;
 
-impl Minet {
+impl minet {
     pub fn new(input: usize, hidden: usize, output: usize) -> Self {
         let total_neurons = input + hidden + output;
         let genes = vec![(0.0, Vec::new()); total_neurons];
 
-        let mut minet = Minet {
+        let mut minet = minet {
             genes,
             input,
             hidden,
@@ -50,6 +49,11 @@ impl Minet {
         }
         
         minet
+    }
+    
+    /// Initializes the population with random neural networks.
+    pub fn initialize_population(pop_size: usize, inputs: usize, hidden: usize, outputs: usize) -> Vec<minet> {
+        (0..pop_size).map(|_| minet::new(inputs, hidden, outputs)).collect()
     }
 
     pub fn mutate(&mut self) {
@@ -78,7 +82,7 @@ impl Minet {
             let new_gene = if rng.gen_bool(0.5) { gene1 } else { gene2 };
             new_genes.push(new_gene);
         }
-        let child = Minet {
+        let child = minet {
             genes: new_genes,
             input: self.input,
             hidden: self.hidden,
@@ -226,6 +230,37 @@ impl Minet {
     pub fn synapse_count(&self) -> usize {
         self.genes.iter().map(|gene| gene.1.len()).sum()
     }
+    
+    /// Takes the best % of the population 
+    /// Randomly crossbreeds them (asexual reproduction is possible)
+    /// Returns a new population of the children of the survivors, with mutations
+    pub fn crossbreed_population(
+        mut population: Vec<minet>,
+        survival_rate: f32,
+        target_population: usize, 
+    ) -> Vec<minet> {
+        let population_size = population.len();
+        let surviving_count = (population_size as f32 * survival_rate).round() as usize;
+    
+        let new_target = target_population - surviving_count;
+        
+        // Take the best (survival_rate * population) of the population by fitness
+        population.sort_by(|a, b| b.fitness.partial_cmp(&a.fitness).unwrap());
+        population.truncate(surviving_count);
+        
+        for i in 0..population.len() {
+            population[i].fitness = 0.0;
+        }
+        
+        for _ in 0..new_target{
+            let parent1 = population.choose(&mut thread_rng()).unwrap();
+            let parent2 = population.choose(&mut thread_rng()).unwrap();
+            let mut child = parent1.crossbreed(parent2);
+            child.mutate();
+            population.push(child);
+        }
+        population
+    }
 }
 
 fn sample_normal(std_dev: f32) -> f32 {
@@ -234,33 +269,4 @@ fn sample_normal(std_dev: f32) -> f32 {
     normal.sample(&mut rng)
 }
 
-/// Takes the best % of the population 
-/// Randomly crossbreeds them (asexual reproduction is possible)
-/// Returns a new population of the children of the survivors, with mutations
-pub fn crossbreed_population(
-    mut population: Vec<Minet>,
-    survival_rate: f32,
-    target_population: usize, 
-) -> Vec<Minet> {
-    let population_size = population.len();
-    let surviving_count = (population_size as f32 * survival_rate).round() as usize;
 
-    let new_target = target_population - surviving_count;
-    
-    // Take the best (survival_rate * population) of the population by fitness
-    population.sort_by(|a, b| b.fitness.partial_cmp(&a.fitness).unwrap());
-    population.truncate(surviving_count);
-    
-    for i in 0..population.len() {
-        population[i].fitness = 0.0;
-    }
-    
-    for _ in 0..new_target{
-        let parent1 = population.choose(&mut thread_rng()).unwrap();
-        let parent2 = population.choose(&mut thread_rng()).unwrap();
-        let mut child = parent1.crossbreed(parent2);
-        child.mutate();
-        population.push(child);
-    }
-    population
-}

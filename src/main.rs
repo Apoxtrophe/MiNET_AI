@@ -33,7 +33,7 @@ const TABLE_EXPECTED: &[&[f32]] = &[
 ];
 
 fn main () {
-    benchmark();
+    //benchmark();
     
 
    /* 
@@ -52,7 +52,7 @@ fn benchmark() {
     
     let mut generation_sum = 0;
     for iteration in 0..ITERATIONS {
-        let mut population = initialize_population(POPULATION, 3, 5, 2);
+        let mut population = minet::initialize_population(POPULATION, 3, 5, 2);
         print_header();
 
         for generation in 1..=GENERATIONS {
@@ -75,19 +75,14 @@ fn benchmark() {
                 }
             }
             generation_sum += 1;
-            population = crossbreed_population(population, SURVIVAL_RATE, POPULATION);
+            population = minet::crossbreed_population(population, SURVIVAL_RATE, POPULATION);
         }
     }
     println!("!!!   Average Generations to Perfection:: {}", generation_sum / ITERATIONS);
 }
 
-/// Initializes the population with random neural networks.
-fn initialize_population(pop_size: usize, inputs: usize, hidden: usize, outputs: usize) -> Vec<Minet> {
-    (0..pop_size).map(|_| Minet::new(inputs, hidden, outputs)).collect()
-}
-
 /// Evaluates and assigns fitness scores to each network in the population.
-fn evaluate_population_fitness(population: &mut Vec<Minet>, inputs: &[&[f32]], expected: &[&[f32]]) {
+fn evaluate_population_fitness(population: &mut Vec<minet>, inputs: &[&[f32]], expected: &[&[f32]]) {
     population.iter_mut().for_each(|network| {
         let outputs: Vec<f32> = inputs.iter().map(|&input| network.forward(input.to_vec())[0]).collect();
         network.fitness = calculate_fitness(&outputs, &extract_first_column(expected));
@@ -100,7 +95,7 @@ fn extract_first_column(data: &[&[f32]]) -> Vec<f32> {
 }
 
 /// Retrieves the network with the highest fitness in the population.
-fn get_best_network(population: &[Minet]) -> Option<&Minet> {
+fn get_best_network(population: &[minet]) -> Option<&minet> {
     population.iter().max_by(|a, b| a.fitness.partial_cmp(&b.fitness).unwrap())
 }
 
@@ -116,7 +111,7 @@ fn print_header() {
 /// Prints the details of the current generation's best network.
 fn print_generation(
     generation: usize,
-    network: &Minet,
+    network: &minet,
     expected: &[&[f32]],
     inputs: &[&[f32]],
 ) {

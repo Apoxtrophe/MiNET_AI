@@ -1,9 +1,9 @@
-use crate::Minet;
+use crate::minet;
 use base64::{engine::general_purpose, Engine as _};
 use std::io::{Cursor, Read};
 
 
-impl Minet {
+impl minet {
     pub fn encode(&self) -> String {
     let mut bytes = Vec::new();
 

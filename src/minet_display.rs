@@ -1,6 +1,6 @@
-use crate::Minet;
+use crate::minet;
 
-impl Minet {
+impl minet {
     pub fn display(
         &self,
     ) {
