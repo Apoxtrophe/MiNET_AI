@@ -56,7 +56,7 @@ impl minet {
         (0..pop_size).map(|_| minet::new(inputs, hidden, outputs)).collect()
     }
 
-    pub fn mutate(&mut self) {
+    fn mutate(&mut self) {
         self.mutate_weights();
         self.mutate_bias();
 
@@ -66,7 +66,7 @@ impl minet {
         }
     }
 
-    pub fn synapse_swap(&mut self) {
+    fn synapse_swap(&mut self) {
         self.synapse_remove_random();
         self.synapse_connect_random();
     }
@@ -82,17 +82,18 @@ impl minet {
             let new_gene = if rng.gen_bool(0.5) { gene1 } else { gene2 };
             new_genes.push(new_gene);
         }
-        let child = minet {
+        let mut child = minet {
             genes: new_genes,
             input: self.input,
             hidden: self.hidden,
             output: self.output,
             fitness: 0.0,
         };
+        child.mutate();
         child
     }
 
-    pub fn mutate_weights(&mut self) {
+    fn mutate_weights(&mut self) {
         for gene in self.genes.iter_mut() {
             for synapse in gene.1.iter_mut() {
                 synapse.1 += sample_normal(WEIGHT_STD_DEVIATION);
@@ -100,7 +101,7 @@ impl minet {
         }
     }
 
-    pub fn mutate_bias(&mut self) {
+    fn mutate_bias(&mut self) {
         for gene in self.genes.iter_mut() {
             gene.0 += sample_normal(BIAS_STD_DEVIATION);
         }
@@ -149,7 +150,7 @@ impl minet {
     }
     
     /// Removes a random synapse from the genome, if any synapses exist
-    pub fn synapse_remove_random(&mut self) {
+    fn synapse_remove_random(&mut self) {
         let mut rng = rand::thread_rng();
         let connected_neurons: Vec<(usize, usize)> = self
             .genes
@@ -166,7 +167,7 @@ impl minet {
     }
     
     /// Connects two random, unconnected neurons in the forward direction. 
-    pub fn synapse_connect_random(&mut self) {
+    fn synapse_connect_random(&mut self) {
         let mut rng = rand::thread_rng();
         let non_output = self.input + self.hidden;
 
@@ -183,7 +184,7 @@ impl minet {
     
     /// Connects a random neuron from an index lower than the to_index. 
     /// ie from an output neuron to a hidden or input neuron in the forward direction
-    pub fn connect_random_from(&mut self, to_index: usize) -> usize {
+    fn connect_random_from(&mut self, to_index: usize) -> usize {
         let mut rng = rand::thread_rng();
         
         let non_output = self.input + self.hidden;
@@ -256,7 +257,6 @@ impl minet {
             let parent1 = population.choose(&mut thread_rng()).unwrap();
             let parent2 = population.choose(&mut thread_rng()).unwrap();
             let mut child = parent1.crossbreed(parent2);
-            child.mutate();
             population.push(child);
         }
         population

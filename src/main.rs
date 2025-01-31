@@ -33,13 +33,9 @@ const TABLE_EXPECTED: &[&[f32]] = &[
 ];
 
 fn main () {
-    //benchmark();
-    
-    
-    let network = minet::new(3, 5, 2);
-    network.display();    
-   /* 
+    benchmark();
    
+    /*
    let minet = Minet::new(3, 5, 2);
    minet.display();
    minet.dot_to_file("minet_test.dot");
