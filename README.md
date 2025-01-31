@@ -58,4 +58,47 @@ The survival of the elite population is based on their fitness score (minet_netw
     // Save a network to a dot file so that it can visualized with any graphviz software. 
     network.dot_to_file("example.dot").expect("Failed to save network to dot file");
 ```
-![alt text](https://github.com/Apoxtrophe/MiNET_AI/blob/master/minet_graph.png)
+![alt text](https://github.com/Apoxtrophe/MiNET_AI/blob/master/minet_graph.png?raw=true)
+### Encode / Decode From Easily Shareable 64-Bit Representation 
+```rust
+    let network1 = minet::new(3, 5, 2);
+    let mut network2 = minet::new(3, 5, 2);
+
+    // Encode network_1 as a base-64 string
+    let network1_encoded = network1.encode();
+    
+    // Import the base-64 string into network 2
+    network2.import_encoded(&network1_encoded);
+    
+    // Now Network 1 and Network 2 are identical
+    
+    // Display the genome to the console
+    network1.display_genome();
+    /*
+    CgAAAAAAAgNpK7Q/BK+djT8AAAAAAgVFbZw
+    +CbtApr0AAAAAAwO3P6+9BXLAyr4G8DxCPg
+    AAAAAEBBk6oj4GKtWRvgcnhnI9CBQiRj8AA
+    AAAAgd9zWC+CO5gJb8AAAAAAghcMIq+Ccj5
+    kj0AAAAAAQcvJak+AAAAAAAAAAAAAAAAAAA
+    */
+```
+### Display a Network to The Console
+```rust
+    let network = minet::new(3, 5, 2);
+    network.display();
+    /*
+    ===== GENOME =====
+    0 | Input :: Bias: 0, Synapses: [(3, -0.77), (4, -0.64), (5, 1.49), (7, -0.27), (8, -0.09), (9, 0.46)]
+    1 | Input :: Bias: 0, Synapses: [(3, -0.63), (5, -0.32), (9, 0.01)]
+    2 | Input :: Bias: 0, Synapses: [(3, 0.21), (4, -1.04), (8, -0.13)]
+    3 | Hidden :: Bias: 0, Synapses: [(4, -0.28), (5, -0.66), (6, 0.07)]
+    4 | Hidden :: Bias: 0, Synapses: [(6, 0.07)]
+    5 | Hidden :: Bias: 0, Synapses: [(7, -0.69), (8, 0.51)]
+    6 | Hidden :: Bias: 0, Synapses: [(7, 0.43)]
+    7 | Hidden :: Bias: 0, Synapses: []
+    8 | Output :: Bias: 0, Synapses: []
+    9 | Output :: Bias: 0, Synapses: []
+    Synapses: 19
+    Fitness: 0
+    */
+```
