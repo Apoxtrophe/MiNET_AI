@@ -102,3 +102,6 @@ The survival of the elite population is based on their fitness score (minet_netw
     Fitness: 0
     */
 ```
+### Example usage
+ A population of minet_ai networks learns to balance a pendulum above a cart in 21 generations.
+![alt_text](https://github.com/Apoxtrophe/MiNET_AI/blob/master/minet_pendulum_cart.png?raw=true)        
