@@ -31,7 +31,7 @@ impl minet {
     general_purpose::STANDARD_NO_PAD.encode(&bytes)
     }
     
-    pub fn import_base64(
+    pub fn import_encoded(
         &mut self,
         encoded: &str,
     ) {
