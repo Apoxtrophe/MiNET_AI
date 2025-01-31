@@ -37,23 +37,7 @@ fn main () {
     
     
     let network = minet::new(3, 5, 2);
-    network.display();
-    /*
-    ===== GENOME =====
-    0 | Input :: Bias: 0, Synapses: [(3, -0.77), (4, -0.64), (5, 1.49), (7, -0.27), (8, -0.09), (9, 0.46)]
-    1 | Input :: Bias: 0, Synapses: [(3, -0.63), (5, -0.32), (9, 0.01)]
-    2 | Input :: Bias: 0, Synapses: [(3, 0.21), (4, -1.04), (8, -0.13)]
-    3 | Hidden :: Bias: 0, Synapses: [(4, -0.28), (5, -0.66), (6, 0.07)]
-    4 | Hidden :: Bias: 0, Synapses: [(6, 0.07)]
-    5 | Hidden :: Bias: 0, Synapses: [(7, -0.69), (8, 0.51)]
-    6 | Hidden :: Bias: 0, Synapses: [(7, 0.43)]
-    7 | Hidden :: Bias: 0, Synapses: []
-    8 | Output :: Bias: 0, Synapses: []
-    9 | Output :: Bias: 0, Synapses: []
-    Synapses: 19
-    Fitness: 0
-    */
-    
+    network.display();    
    /* 
    
    let minet = Minet::new(3, 5, 2);
