@@ -1,6 +1,6 @@
 [package]
 name = "minet_ai"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Astoria"] 
 edition = "2021"
 rust-version = "1.84.1"
