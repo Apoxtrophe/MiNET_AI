@@ -33,16 +33,21 @@ const TABLE_EXPECTED: &[&[f32]] = &[
 ];
 
 fn main () {
-    benchmark();
+    let mut test = minet::new(3, 5, 2);
+    
+    let output = test.forward(vec![0.0, 1.0, 1.0]);
+    println!("Output: {:?}", output);
+    
+    let activation_map = test.forward_display(vec![0.0, 1.0, 1.0]);
+    println!("Activation Map: {:?}", activation_map);
+    
+    //benchmark();
    
     /*
    let minet = Minet::new(3, 5, 2);
    minet.display();
    minet.dot_to_file("minet_test.dot");
    */
-
-    
-
 }
 
 fn benchmark() {

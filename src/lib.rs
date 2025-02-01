@@ -149,6 +149,48 @@ impl minet {
         outputs
     }
     
+    pub fn forward_display(&self, inputs: Vec<f32>) -> Vec<f32> {
+        let input_neurons = self.input;
+        let hidden_neurons = self.hidden;
+        let output_neurons = self.output;
+        let length = self.genes.len();
+
+        let mut activation_map = vec![0.0; length];
+
+        // Set input activations and propagate forward
+        for i in 0..input_neurons {
+            activation_map[i] = inputs[i];
+            for &(target_idx, weight) in &self.genes[i].1 {
+                activation_map[target_idx as usize] += inputs[i] * weight;
+            }
+        }
+
+        // Process hidden layer
+        for i in input_neurons..(input_neurons + hidden_neurons) {
+            // Add bias
+            activation_map[i] += self.genes[i].0;
+            // Apply ReLU (assume relu(x) = max(0,x))
+            activation_map[i] = tanh(activation_map[i]);
+
+            // Propagate hidden activations forward
+            for &(target_idx, weight) in &self.genes[i].1 {
+                activation_map[target_idx as usize] += activation_map[i] * weight;
+            }
+        }
+
+        // Process output layer
+        let mut outputs = Vec::with_capacity(output_neurons);
+        for i in (input_neurons + hidden_neurons)..(input_neurons + hidden_neurons + output_neurons)
+        {
+            // Add bias
+            activation_map[i] += self.genes[i].0;
+            // Apply Sigmoid
+            activation_map[i] = sigmoid(activation_map[i]);
+            outputs.push(activation_map[i]);
+        }
+        activation_map
+    }
+    
     /// Removes a random synapse from the genome, if any synapses exist
     fn synapse_remove_random(&mut self) {
         let mut rng = rand::thread_rng();
